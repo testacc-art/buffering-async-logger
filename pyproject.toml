@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "buffering-async-logger"
+version = "0.1.0"
+description = "Helpers for sending logs to a destination in batches using a buffer in an async Python app."
+authors = ["Jeremy Epstein <jazepstein@gmail.com>"]
+homepage = "https://github.com/Jaza/buffering-async-logger"
+readme = "README.md"
+license = "Apache-2.0"
+packages = [{include = "buffering_async_logger"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4"
+pydantic = {extras = ["dotenv"], version = "*"}
+httpx = "*"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+black = "*"
+flake8 = "*"
+mypy = "*"
+isort = "*"
+pytest-cov = "*"
+autoflake = "*"
+requests = "*"
+bandit = "*"
+pytest-asyncio = "*"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.isort]
+profile = "black"
+lines_after_imports = 2
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
