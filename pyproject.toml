@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "buffering-async-logger"
-version = "0.1.0"
+version = "0.1.1"
 description = "Helpers for sending logs to a destination in batches using a buffer in an async Python app."
 authors = ["Jeremy Epstein <jazepstein@gmail.com>"]
 homepage = "https://github.com/Jaza/buffering-async-logger"
@@ -10,7 +10,6 @@ packages = [{include = "buffering_async_logger"}]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4"
-pydantic = {extras = ["dotenv"], version = "*"}
 httpx = "*"
 
 
@@ -22,7 +21,6 @@ mypy = "*"
 isort = "*"
 pytest-cov = "*"
 autoflake = "*"
-requests = "*"
 bandit = "*"
 pytest-asyncio = "*"
 
