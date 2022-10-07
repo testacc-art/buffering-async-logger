@@ -75,10 +75,10 @@ Built for use with [Sumo Logic](https://www.sumologic.com/), which allows for se
            "message": record["message"],
        }
 
-       if record["extra"].get("woo"):
-           _record["woo"] = record["extra"]["woo"]
-       if record["extra"].get("hoo"):
-           _record["hoo"] = record["extra"]["hoo"]
+       if record["extra"].get("foo"):
+           _record["foo"] = record["extra"]["foo"]
+       if record["extra"].get("moo"):
+           _record["moo"] = record["extra"]["moo"]
 
        return _record
 
