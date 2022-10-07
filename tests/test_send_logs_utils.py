@@ -58,10 +58,10 @@ def log_formatter_test_func(record: Any) -> Any:
         "message": record.extra["message"],
     }
 
-    if record.extra.get("woo"):
-        _record["woo"] = record.extra["woo"]
-    if record.extra.get("hoo"):
-        _record["hoo"] = record.extra["hoo"]
+    if record.extra.get("foo"):
+        _record["foo"] = record.extra["foo"]
+    if record.extra.get("moo"):
+        _record["moo"] = record.extra["moo"]
 
     return f"{json.dumps(_record)}\n"
 
@@ -83,8 +83,8 @@ async def test_send_logs_to_destination(mock_httpx):
         "level": "INFO",
         "name": "foologger",
         "message": "do foo",
-        "woo": "foo123",
-        "hoo": "moo123/INFO",
+        "foo": "foo123",
+        "moo": "moo123",
     }
 
     record2 = MagicMock()
@@ -94,8 +94,8 @@ async def test_send_logs_to_destination(mock_httpx):
         "level": "WARNING",
         "name": "foologger",
         "message": "oh my foo",
-        "woo": "foo123",
-        "hoo": "moo123/WARNING",
+        "foo": "foo123",
+        "moo": "moo123",
     }
 
     record3 = MagicMock()
@@ -105,8 +105,8 @@ async def test_send_logs_to_destination(mock_httpx):
         "level": "INFO",
         "name": "foologger",
         "message": "do more foo",
-        "woo": "foo123",
-        "hoo": "moo123/INFO",
+        "foo": "foo123",
+        "moo": "moo123",
     }
 
     record4 = MagicMock()
@@ -116,8 +116,8 @@ async def test_send_logs_to_destination(mock_httpx):
         "level": "INFO",
         "name": "foologger",
         "message": "still more foo",
-        "woo": "foo123",
-        "hoo": "moo123/INFO",
+        "foo": "foo123",
+        "moo": "moo123",
     }
 
     records = [record1, record2, record3, record4]
@@ -151,16 +151,16 @@ async def test_send_logs_to_destination(mock_httpx):
                                 "level": "INFO",
                                 "logger": "foologger",
                                 "message": "do foo",
-                                "woo": "foo123",
-                                "hoo": "moo123/INFO",
+                                "foo": "foo123",
+                                "moo": "moo123",
                             },
                             {
                                 "timestamp": "2020-01-02 03:04:07.678+0000",
                                 "level": "INFO",
                                 "logger": "foologger",
                                 "message": "do more foo",
-                                "woo": "foo123",
-                                "hoo": "moo123/INFO",
+                                "foo": "foo123",
+                                "moo": "moo123",
                             },
                         ]
                     ]
@@ -178,8 +178,8 @@ async def test_send_logs_to_destination(mock_httpx):
                                 "level": "INFO",
                                 "logger": "foologger",
                                 "message": "still more foo",
-                                "woo": "foo123",
-                                "hoo": "moo123/INFO",
+                                "foo": "foo123",
+                                "moo": "moo123",
                             },
                         ]
                     ]
@@ -197,8 +197,8 @@ async def test_send_logs_to_destination(mock_httpx):
                                 "level": "WARNING",
                                 "logger": "foologger",
                                 "message": "oh my foo",
-                                "woo": "foo123",
-                                "hoo": "moo123/WARNING",
+                                "foo": "foo123",
+                                "moo": "moo123",
                             },
                         ]
                     ]
