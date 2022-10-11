@@ -17,4 +17,4 @@ async def test_start_flush_buffer_timer():
     )
     await sleep(0.000000001)
 
-    assert mock_caches_obj.BUFFERING_HANDLER.flush.call_count == 4  # nosec
+    assert mock_caches_obj.BUFFERING_HANDLER.flush.call_count == 4
