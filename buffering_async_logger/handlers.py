@@ -18,6 +18,7 @@ class BufferingAsyncHandler(BufferingHandler):
         get_request_headers_func: Callable[[dict[str, Any], K], dict[str, Any]],
         chunk_size: int,
         context: C | None = None,
+        ignore_runtime_errors_on_send: bool = True,
     ):
         super().__init__(capacity)
         self.url = url
@@ -25,6 +26,7 @@ class BufferingAsyncHandler(BufferingHandler):
         self.get_request_headers_func = get_request_headers_func
         self.chunk_size = chunk_size
         self.context = context
+        self.ignore_runtime_errors_on_send = ignore_runtime_errors_on_send
 
         logger_caches.BUFFERING_HANDLER = self
 
@@ -41,6 +43,7 @@ class BufferingAsyncHandler(BufferingHandler):
             self.get_request_headers_func,
             self.chunk_size,
             self.context,
+            self.ignore_runtime_errors_on_send,
         ]
 
         self.buffer = []

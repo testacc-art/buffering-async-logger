@@ -136,6 +136,7 @@ async def test_send_logs_to_destination(mock_httpx):
         get_request_headers_test_func,
         2,
         get_log_aggregator_context_test_func(),
+        False,
     )
 
     mock_client.post.assert_has_calls(

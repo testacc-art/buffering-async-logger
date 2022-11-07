@@ -37,6 +37,7 @@ async def _send_logs_chunk_to_destination(
     records: list[LogRecord],
     format_func: Callable[[Any], Any],
     get_request_headers_func: Callable[[dict[str, Any], K], dict[str, Any]],
+    ignore_runtime_errors_on_send: bool,
 ):
     """Send one chunk of log records to the destination."""
     payload = _format_logs_for_destination(records, format_func)
@@ -49,7 +50,11 @@ async def _send_logs_chunk_to_destination(
     )
 
     async with httpx.AsyncClient() as client:
-        await client.post(url, content=payload, headers=headers)
+        try:
+            await client.post(url, content=payload, headers=headers)
+        except RuntimeError:  # pragma: no cover
+            if not ignore_runtime_errors_on_send:
+                raise
 
 
 async def _send_logs_to_destination_for_aggregator_key(
@@ -59,6 +64,7 @@ async def _send_logs_to_destination_for_aggregator_key(
     format_func: Callable[[Any], Any],
     get_request_headers_func: Callable[[dict[str, Any], K], dict[str, Any]],
     chunk_size: int,
+    ignore_runtime_errors_on_send: bool,
 ):
     """Send all log records for the specified aggregator key to the destination."""
     records_iter = iter(records)
@@ -71,6 +77,7 @@ async def _send_logs_to_destination_for_aggregator_key(
             chunk,
             format_func,
             get_request_headers_func,
+            ignore_runtime_errors_on_send,
         )
 
 
@@ -82,6 +89,7 @@ async def send_logs_to_destination(
     get_request_headers_func: Callable[[dict[str, Any], K], dict[str, Any]],
     chunk_size: int,
     context: C | None,
+    ignore_runtime_errors_on_send: bool,
 ):
     """Send the specified log records to the destination."""
     records_aggregated = _get_aggregated_logs(
@@ -96,4 +104,5 @@ async def send_logs_to_destination(
             format_func,
             get_request_headers_func,
             chunk_size,
+            ignore_runtime_errors_on_send,
         )

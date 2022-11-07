@@ -35,6 +35,7 @@ async def test_buffering_async_handler(mock_send_logs_to_destination):
         get_request_headers_func,
         chunk_size,
         context,
+        True,
     )
 
 
