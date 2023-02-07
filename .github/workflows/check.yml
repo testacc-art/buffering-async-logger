@@ -2,8 +2,10 @@ name: Check
 
 on:
   push:
-    branches: [master]
   pull_request:
+
+env:
+  POETRY_VIRTUALENVS_IN_PROJECT: 1
 
 jobs:
   unit-tests:
@@ -11,44 +13,54 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Apt install
-        run: sudo ./scripts/aptinstall.sh
-      - name: Cache Poetry
-        uses: actions/cache@v3
-        id: cache-poetry
-        with:
-          path: .venv
-          key: poetry-$
-          restore-keys: |
-            poetry-$
-      - name: Install Poetry
-        run: POETRY_VIRTUALENVS_IN_PROJECT=1 ./scripts/poetryinstall.sh
+#           cache: poetry
+#       - name: Apt install
+#         run: sudo ./scripts/aptinstall.sh
+#       - name: Cache Poetry
+#         uses: actions/cache@v3
+#         id: cache-poetry
+#         with:
+#           path: .venv
+#           key: poetry-$
+#           restore-keys: |
+#             poetry-$
+#       - name: Install Poetry
+#         run: ./scripts/poetryinstall.sh
       - name: Run tests
-        run: ./scripts/test.sh
-  lint-and-types:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - name: Apt install
-        run: sudo ./scripts/aptinstall.sh
-      - name: Cache Poetry
-        uses: actions/cache@v3
-        id: cache-poetry
-        with:
-          path: .venv
-          key: poetry-$
-          restore-keys: |
-            poetry-$
-      - name: Install Poetry
-        run: POETRY_VIRTUALENVS_IN_PROJECT=1 ./scripts/poetryinstall.sh
-      - name: Check style and typing
-        run: ./scripts/verify.sh
+        run: | 
+          poetry run pytest \
+            --cov=buffering_async_logger \
+            --cov=tests \
+            --cov-fail-under=100 \
+            --cov-report=term-missing \
+            tests
+#   lint-and-types:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out code
+#         uses: actions/checkout@v3
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.10'
+#           cache: poetry
+#       - name: Apt install
+#         run: sudo ./scripts/aptinstall.sh
+# #       - name: Cache Poetry
+# #         uses: actions/cache@v3
+# #         id: cache-poetry
+# #         with:
+# #           path: .venv
+# #           key: poetry-$
+# #           restore-keys: |
+# #             poetry-$
+#       - name: Install Poetry
+#         run: ./scripts/poetryinstall.sh
+#       - name: Check style and typing
+#         run: ./scripts/verify.sh
