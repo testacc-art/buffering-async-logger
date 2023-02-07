@@ -20,7 +20,7 @@ jobs:
         id: cp310
         with:
           python-version: '3.10'
-#           cache: poetry
+          cache: poetry
 #       - name: Apt install
 #         run: sudo ./scripts/aptinstall.sh
 #       - name: Cache Poetry
@@ -33,9 +33,9 @@ jobs:
 #             poetry-$
 #       - name: Install Poetry
 #         run: ./scripts/poetryinstall.sh
-#       - name: Install depedencies 
-#         if: steps.cp310.outputs.cache-hit != 'true'
-#         run: poetry install 
+      - name: Install depedencies 
+        if: steps.cp310.outputs.cache-hit != 'true'
+        run: poetry install 
       - name: Run tests
         run: | 
           poetry run pytest \
