@@ -4,8 +4,8 @@ on:
   push:
   pull_request:
 
-env:
-  POETRY_VIRTUALENVS_IN_PROJECT: 1
+# env:
+#   POETRY_VIRTUALENVS_IN_PROJECT: 1
 
 jobs:
   unit-tests:
