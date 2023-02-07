@@ -17,6 +17,7 @@ jobs:
         run: pipx install poetry
       - name: Set up Python
         uses: actions/setup-python@v4
+        id: cp310
         with:
           python-version: '3.10'
 #           cache: poetry
@@ -32,7 +33,9 @@ jobs:
 #             poetry-$
 #       - name: Install Poetry
 #         run: ./scripts/poetryinstall.sh
-      - run: poetry install 
+      - name: Install depedencies
+        if: steps.cp310.outputs.cache-hit != 'true'
+        run: poetry install 
       - name: Run tests
         run: | 
           poetry run pytest \
