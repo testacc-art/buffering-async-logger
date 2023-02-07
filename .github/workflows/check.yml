@@ -33,7 +33,7 @@ jobs:
 #             poetry-$
 #       - name: Install Poetry
 #         run: ./scripts/poetryinstall.sh
-      - name: Install depedencies 
+      - name: Install depedencies  
         if: steps.cp310.outputs.cache-hit != 'true'
         run: poetry install 
       - name: Run tests
